@@ -33,7 +33,7 @@ int getCodeIndex (unsigned long code) {
 }
 
 // Send code
-void sendCode (RCSwitch switchTX, unsigned long lastCode) {
+unsigned long sendCode (RCSwitch switchTX, unsigned long lastCode) {
   //Get next code
   unsigned long* codeType = ( getTypeOfCode(lastCode) ? code_on : code_off);
   int currentCodeIndex = getCodeIndex (lastCode);
@@ -50,6 +50,7 @@ void sendCode (RCSwitch switchTX, unsigned long lastCode) {
       switchTX.send(codeType[currentCodeIndex ++], 24);
     }
   }
+  return codeType[currentCodeIndex];
 }
 
 // Display Fuctions

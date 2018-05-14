@@ -19,6 +19,8 @@ LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 // Button
 const int buttonPin = 7;
+bool button1_status = false;
+bool button1_action = false;
 
 // LEDS
 int const led_sent = 13;
@@ -26,6 +28,7 @@ int const led_recieved = 10;
 
 // Auxiliar variables
 DateTime change_time;
+unsigned long last_sent_code = 11807932;
 unsigned long const code_on[] = {12165804, 11696236, 12518172, 11567196};
 unsigned long const code_off[] = {11807932, 12470652, 12319532, 11982220};
 int const protocol[] = {3, 5};

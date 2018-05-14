@@ -35,7 +35,7 @@ void setup() {
 void loop() {
   DateTime now = rtc.now();
 
-  //Reciever
+  // Reciever
   if (mySwitchRx.available()) {
     Serial.println("Value: " + String(mySwitchRx.getReceivedValue()));
     Serial.println("Delay: " + String(mySwitchRx.getReceivedDelay()));
@@ -48,5 +48,18 @@ void loop() {
     mySwitchRx.resetAvailable();
   }
 
-  
+  // Transmitter
+  /*
+      The message will be send when the user will press the button (ON/OFF) or automatically after 5 seconds since last send.
+  */
+
+  button1_status = digitalRead(buttonPin);
+  if (button1_status == HIGH  || now.unixtime() - change_time.unixtime() > 5 ) {
+    button1_action = ! button1_action;
+
+    last_sent_code = sendCode(mySwitchTx, last_sent_code);
+    digitalWrite(led_sent, (button1_action ? HIGH : LOW));
+    change_time = rtc.now();
+    displaySentMessage(lcd, last_sent_code);
+  }
 }
